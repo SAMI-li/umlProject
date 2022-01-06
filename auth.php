@@ -1,34 +1,41 @@
-<?php
+
+<header> 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<?php      
 session_start();
-include "conn.php";
-include "login.php";
+    include('conn.php');  
+    $email = $_POST['email'];  
+    $password = $_POST['pass'];  
+      
+        //to prevent from mysqli injection  
+        $email = stripcslashes($email);  
+        $password = stripcslashes($password);  
+        $email = mysqli_real_escape_string($con, $email);  
+        $password = mysqli_real_escape_string($con, $password);  
+      
+        $sql = "select * from user where email= '$email' and mdp = '$password'";  
+        $result = mysqli_query($con, $sql);  
+        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);  
+        $count = mysqli_num_rows($result);  
+          
+        if($count == 1){  
+            $_SESSION['log']='good';
+            header("location:form.php"); 
 
-$email = $_POST['email'];
-$password = $_POST['password'];
-
-
-
-    $sql = mysqli_query($con,"SELECT * FROM user WHERE email='$email' AND password='$password'");
-    if(!$sql || mysqli_num_rows($sql)==0){
-        $qry = mysqli_fetch_array($sql);
-        $_SESSION['login']='bien';
-        $_SESSION['email'] = $qry['email'];
-        $_SESSION['nom'] = $qry['nom'];
-       
-            header("location:UML.php");
+        }  
+        else{  
+            ?>
+            <script >
+         //   swal("Email ou Mdp invalide", "Essayez de nouveau !", "warning");
             
-    }else{
-        ?>
-        <script >
-        swal("Email ou Mdp invalide", "Essayez de nouveau !", "warning");
-          wait(4);
-          $_SESSION['login']='login';
-        </script>
-         
-        <?php
-    }
-    
+            
+             document.location.href="/uml/login.php"
 
-    
+                      </script>
+             
+            <?php
 
-?>
+        
+        }     
+?>  

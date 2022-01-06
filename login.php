@@ -28,6 +28,8 @@
 <!--===============================================================================================-->
 </head>
 <body>
+
+
 	
 	<div class="limiter">
 		<div class="container-login100">
@@ -49,7 +51,7 @@
 						<span class="btn-show-pass">
 						
 						</span>
-						<input class="input100" type="password" name="password">
+						<input class="input100" type="password" name="pass">
 						<span class="focus-input100" data-placeholder="Password"></span>
 					</div>
 
